@@ -4,8 +4,6 @@
 
 This project analyses AFL matchday attendance patterns using publicly available AFL Tables data. The aim is to understand how attendance varies across seasons, clubs, venues, rounds and matchdays, and to generate business-focused insights that could support fan engagement, venue planning and matchday operations.
 
-The project was built as a portfolio project for data analytics, technology and sport business roles.
-
 ## Business Question
 
 **What AFL attendance patterns can support better fan engagement, venue planning and matchday operations?**
