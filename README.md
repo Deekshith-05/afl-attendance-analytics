@@ -166,45 +166,39 @@ Rounds 24 and 25 show strong average attendance, but these rounds only appear in
 - COVID-affected seasons were excluded from the main comparison because attendance conditions were not normal.
 - The current project is descriptive and analytical; the next phase will add predictive modelling.
 
-## Next Step: Attendance Prediction Model
+## Machine Learning: Attendance Prediction
 
-The next planned notebook is:
+The project includes a regression model that predicts AFL Home & Away match attendance using information available before a match begins.
 
-```text
-notebooks/03_attendance_prediction_model.ipynb
-```
+**Features:** season, round, month, match day, home team, away team and venue.
 
-The modelling task will be:
+**Validation design:** expanding-window season-based validation on 2012–2023, followed by a final holdout evaluation on 2024–2025.
 
-**Predict Home & Away match attendance using only pre-match information.**
+| Model | Holdout MAE | Holdout RMSE | Holdout R² |
+|---|---:|---:|---:|
+| Untuned Random Forest | 6,302 | 8,332 | 0.804 |
+| Tuned Random Forest (selected) | 6,548 | 8,808 | 0.781 |
+| Gradient Boosting | 6,770 | 8,928 | 0.775 |
+| Linear Regression | 7,383 | 9,906 | 0.723 |
+| Mean Baseline | 14,379 | 19,262 | -0.048 |
 
-Planned features:
+The tuned Random Forest was formally selected because it reduced expanding-window cross-validation MAE from 6,483 to 6,184 attendees without using the final test set. Although the untuned model achieved a lower observed holdout MAE, changing the selected model after inspecting the holdout result would introduce test-set selection bias.
 
-- season
-- round
-- month
-- match_day
-- home_team
-- away_team
-- venue
+![Model comparison](images/final_model_mae_comparison.png)
 
-Target:
+![Actual versus predicted attendance](images/model_actual_vs_predicted.png)
 
-- attendance
+![Permutation feature importance](images/random_forest_permutation_importance.png)
 
-Planned models:
+### Main modelling findings
 
-- Baseline mean model
-- Linear Regression
-- Random Forest Regressor
-- Gradient Boosting Regressor
+- Venue was the strongest predictor, followed by home team and away team.
+- The model performed consistently across the 2024 and 2025 holdout seasons.
+- Predictions were most accurate for common crowd sizes.
+- Blockbuster crowds above 80,000 remained difficult to predict.
+- Large errors at the M.C.G. show that venue alone cannot distinguish ordinary fixtures from marquee matches.
 
-Evaluation metrics:
-
-- MAE
-- RMSE
-- R²
-
+The full workflow is available in [`notebooks/03_attendance_prediction_model.ipynb`](notebooks/03_attendance_prediction_model.ipynb).
 ## Skills Demonstrated
 
 - Data collection from public web sources
